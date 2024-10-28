@@ -41,7 +41,7 @@ console.log('redirect to url')
     FindAll() {
       return this.authService.findAll();
     }
-    @ApiBearerAuth()
+    @ApiBearerAuth()//swagger ui add
     @Get('/:id')
     @UseGuards(AuthenticationGuard)
     FindOne(@Param('id') id: string) {
