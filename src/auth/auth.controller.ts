@@ -35,7 +35,7 @@ console.log('redirect to url')
     async login(@Body() user: userDto) {
       return this.authService.login(user);
     }  
-
+@ApiBearerAuth()
     @Get('get_users')
     @UseGuards(AuthenticationGuard)
     FindAll() {
@@ -47,6 +47,7 @@ console.log('redirect to url')
     FindOne(@Param('id') id: string) {
       return this.authService.findOne(id);
     }
+    @ApiBearerAuth()
     @Patch(':id')
     @UseGuards(AuthenticationGuard)
     @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
