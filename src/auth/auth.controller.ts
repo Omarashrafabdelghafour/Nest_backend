@@ -1,5 +1,6 @@
 
-import { Controller, Post, Body,Get, Param,Delete,Res ,Query, Patch,UsePipes, ValidationPipe, Redirect, HttpCode, UseGuards} from '@nestjs/common';
+import { Controller, Post, Body,Get, Param,Delete,Res ,Query, Patch,UsePipes,
+   ValidationPipe, Redirect, HttpCode, UseGuards} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { userDto } from 'src/Dto/user.dto';
 import { Http2ServerResponse } from 'http2';
