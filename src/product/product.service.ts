@@ -17,7 +17,7 @@ export class ProductService {
     if (!product) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
-  
+  ///
     // Check if the user making the request is the product owner (compare sub from the JWT to the Ownertoken)
     if (product.Ownertoken !== ownertoken.sub) { // 'sub' in JWT is the user ID or email
       throw new ForbiddenException('You are not authorized to delete this product');
