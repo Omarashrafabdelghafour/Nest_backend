@@ -36,4 +36,7 @@ export class OrderService {
     // Save the order to the database
     return order.save();
   }
+  async getAllOrders(): Promise<Order[]> {
+    return this.orderModel.find().exec();  // Fetch all orders from the database
+  }
 }
