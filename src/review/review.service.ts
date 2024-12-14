@@ -13,15 +13,15 @@ export class ReviewService {
   async createReview(createReviewDto: CreateReviewDto): Promise<Review> {
     const { user, rating, comment, product } = createReviewDto;
 
-    // Create the review document
+    
     const review = new this.reviewModel({
       user,
       rating,
       comment,
-      product,  // Will be undefined if it's a global comment
+      product,  
     });
 
-    // Save the review to the database
+    
     return review.save();
   }
 }

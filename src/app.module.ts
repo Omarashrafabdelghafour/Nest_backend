@@ -17,3 +17,5 @@ import { OrderModule } from './order/order.module';
   ],
 })
 export class AppModule {}
+
+export { AuthModule };

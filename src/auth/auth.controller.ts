@@ -30,6 +30,7 @@ console.log('redirect to url')
     @Post('register')
     async register(@Body() user: userDto) {
       return this.authService.register(user);
+      console.log("regis")
     }
   
     @Post('login')
