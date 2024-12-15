@@ -1,19 +1,30 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+class OrderProduct {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true })
+  price: number;
+
+  @Prop({ required: true })
+  quantity: number;
+}
+
 @Schema()
 export class Order extends Document {
   @Prop({ required: true })
-  user: string;  // User who placed the order (User ID)
+  useremail: string;
 
-  @Prop({ required: true, type: [{ type: String, ref: 'Product' }] })
-  products: string[];  // List of product IDs in the order
+  @Prop({ required: true, type: [OrderProduct] })
+  products: OrderProduct[];
 
   @Prop({ required: true })
-  total: number;  // Total amount for the order
+  total: number;
 
   @Prop({ required: true, default: 'pending' })
-  status: string;  // Order status (e.g., pending, completed)
+  status: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

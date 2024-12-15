@@ -1,9 +1,7 @@
-import { Controller, Post, Body, UseGuards, Req, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from '../Dto/order.dto';
 import { AuthenticationGuard } from '../auth/authentication.guard';
-import { Roles } from 'src/decorators/roles.decorator';
-import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('orders')
 export class OrderController {
@@ -11,19 +9,18 @@ export class OrderController {
 
   @UseGuards(AuthenticationGuard)
   @Post('create')
-  async createOrder(
-    @Body() createOrderDto: CreateOrderDto,
-    @Req() req,
-  ) {
-    const userId = req.user.sub;  // Extract user ID from JWT token (req.user)
-    createOrderDto.user = userId;  // Attach the user ID to the DTO
+  async createOrder(@Body() createOrderDto: CreateOrderDto) {
+    const { orderId, total } = await this.orderService.createOrder(createOrderDto);
 
-    return this.orderService.createOrder(createOrderDto);  // Call service to create the order
+    return {
+      message: 'Order created successfully',
+      orderId,
+      total,
+    };
   }
-  @Roles("Admin")  // Only allow access to users with the 'Admin' role
-  @UseGuards(RolesGuard)  // Apply the RolesGuard for role-based access control
-  @Get('get_all_order')
+
+  @Get('get_all_orders')
   async getAllOrders() {
-    return this.orderService.getAllOrders();  // Retrieve all orders
+    return this.orderService.getAllOrders();
   }
 }

@@ -1,11 +1,24 @@
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+
+class ProductInput {
+  @IsNotEmpty()
+  name: string;
+
+  @IsNotEmpty()
+  price: number;
+
+  @IsNotEmpty()
+  quantity: number;
+}
 
 export class CreateOrderDto {
-  @IsArray()
+  @IsEmail()
   @IsNotEmpty()
-  products: string[];  // List of product IDs
+  useremail: string;
 
-  @IsNotEmpty()
-  @IsString()
-  user: string;  // User ID, passed from the JWT token
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProductInput)
+  products: ProductInput[];
 }
