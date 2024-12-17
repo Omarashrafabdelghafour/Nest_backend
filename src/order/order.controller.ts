@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Param } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from '../Dto/order.dto';
 import { AuthenticationGuard } from '../auth/authentication.guard';
@@ -23,4 +23,10 @@ export class OrderController {
   async getAllOrders() {
     return this.orderService.getAllOrders();
   }
+  @UseGuards(AuthenticationGuard)
+  @Get(':useremail')
+  async getOrderByEmail(@Param('useremail') useremail: string) {
+    return this.orderService.getOrderByEmail(useremail);
+  }
+  
 }

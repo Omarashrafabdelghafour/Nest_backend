@@ -46,6 +46,9 @@ export class ProductController {
     return products;
   }
 
+
+
+
   @Get('/search')
   search(@Query('key') key) {
     return this.productService.searchProduct(key);

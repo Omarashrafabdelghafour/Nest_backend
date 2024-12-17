@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { ReviewModule } from './review/review.module';  // Import ReviewModule
 import { OrderModule } from './order/order.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { OrderModule } from './order/order.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     ProductModule,
-    ReviewModule, 
+    ReviewModule,
+    MessagesModule, 
     OrderModule // Add ReviewModule here
   ],
 })

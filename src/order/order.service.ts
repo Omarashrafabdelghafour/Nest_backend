@@ -33,4 +33,9 @@ export class OrderService {
   async getAllOrders(): Promise<Order[]> {
     return this.orderModel.find().exec();
   }
+  async getOrderByEmail(useremail: string) {
+    return await this.orderModel.findOne({ useremail });
+  }
+  
+
 }
