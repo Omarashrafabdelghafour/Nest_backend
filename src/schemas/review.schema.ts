@@ -4,7 +4,7 @@ import { User } from '../schemas/user.shema'; // Assuming you have a User schema
 
 @Schema()
 export class Review extends Document {
-  @Prop({ required: true })
+  @Prop({ required: false })
   user: string;  // User who made the review (User ID)
 
   @Prop({ required: true })

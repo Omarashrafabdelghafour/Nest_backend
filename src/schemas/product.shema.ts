@@ -20,6 +20,10 @@ export class Product extends Document {
 
   @Prop({required:true})
   Ownertoken:string
+
+  @Prop({required:false})
+   Owneremail:string
+
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
