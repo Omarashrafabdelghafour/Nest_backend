@@ -24,4 +24,8 @@ export class ReviewService {
     
     return review.save();
   }
+  async getAllReviews(){
+
+    return await  this.reviewModel.find()
+  }
 }
