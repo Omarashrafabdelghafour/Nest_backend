@@ -25,7 +25,7 @@ export class RolesGuard implements CanActivate {
       const decoded = this.jwtService.verify(token);
       request.user = decoded;
 
-      if (roles.includes(decoded.role)) {
+      if (roles.includes(decoded.role)&&request.user.email=="Admin@gmail.com") {
         return true;
       } else {
         console.log('User role not authorized');
