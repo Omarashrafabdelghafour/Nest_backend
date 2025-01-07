@@ -9,12 +9,12 @@ import { AuthenticationGuard } from './authentication.guard';
 import { RolesGuard } from './roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Response } from 'express';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 // import { Role } from 'src/decorators/roles.decorator';
 // import { AuthorizationGuard } from './authorization.guard';
 @Controller('auth')
-
+@ApiTags("Auth")
 
 export class AuthController {
     constructor(private readonly authService: AuthService) {}

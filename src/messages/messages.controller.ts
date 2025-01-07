@@ -1,9 +1,11 @@
 // src/messages/messages.controller.ts
 import { Controller, Post, Body, Get, Query, UseGuards } from '@nestjs/common';
 import { MessagesService } from './messages.service';
+import { ApiTags } from '@nestjs/swagger';
 //import { AuthenticationGuard} from '../../../restapi/src/auth/authentication.guard'
 @Controller('messages')
 //@UseGuards(AuthenticationGuard)
+@ApiTags("Messages")
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 

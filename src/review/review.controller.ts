@@ -3,8 +3,10 @@ import { ReviewService } from './review.service';
 import { CreateReviewDto } from '../Dto/review.dto';
 import { AuthenticationGuard } from '../auth/authentication.guard';  
 import { Console } from 'console';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('reviews')
+@ApiTags('Reviews')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
