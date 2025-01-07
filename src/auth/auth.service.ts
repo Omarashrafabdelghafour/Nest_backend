@@ -21,7 +21,7 @@ export class AuthService {
 
       user.role = user.role || 'user';
 
-      if (user.email === 'Admin@gmail.com' && user.password === process.env.ADMIN_PASSWORD) {
+      if (user.email === process.env.ADMIN_EMAIL && user.password === process.env.ADMIN_PASSWORD) {
         user.role = 'Admin';
       }
 
