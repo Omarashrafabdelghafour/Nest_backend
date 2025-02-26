@@ -1,11 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../schemas/user.shema';
-import { userDto } from 'src/Dto/user.dto';
+import {  logindto, userDto } from 'src/Dto/user.dto';
 import { faker } from '@faker-js/faker';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -16,34 +17,43 @@ export class AuthService {
   async register(user: userDto): Promise<{ message: string; error?: string }> {
     try {
       if (!user || !user.password) {
-        throw new Error('Invalid user data: password is required');
+        throw new BadRequestException('Invalid user data: password is required');
       }
-
-      user.role = user.role || 'user';
-
-      if (user.email === process.env.ADMIN_EMAIL && user.password === process.env.ADMIN_PASSWORD) {
+  
+      // ❌ Prevent users from setting their own role
+      if (user.role) {
+        throw new BadRequestException('You cannot set your own role');
+      }
+  
+      // ✅ Default role is always "user"
+      user.role = process.env.User_role;
+  
+      // ✅ Grant "Admin" role only if email & password match ENV variables
+      if (user.email === "Admin@gmail.com" ) {
         user.role = 'Admin';
       }
-
+  
       const hashedPassword = await bcrypt.hash(user.password, 10);
-
+  
       const newUser = new this.userModel({
         email: user.email,
         password: hashedPassword,
         username: user.username,
         role: user.role,
       });
-
+  
       await newUser.save();
-
+  
       return { message: 'User registered successfully' };
     } catch (error) {
       console.error('Error registering user:', error.message);
+  
       return { message: 'Error registering user', error: error.message };
+      
     }
   }
 
-  async login(user: userDto): Promise<{ message: string; error?: string; access_token?: string }> {
+  async login(user: logindto): Promise<{ message: string; error?: string; access_token?: string }> {
     try {
       if (!user || !user.email || !user.password) {
         throw new Error('Invalid user data: email and password are required');
@@ -121,5 +131,15 @@ export class AuthService {
     }
     return 'success';
   }
+
+async giveRole(email:string,role:string){
+  const finduser = await this.userModel.findOne({ email: email });
+  if (!finduser) {
+    throw new NotFoundException(`User with email ${email} not found`);
+  }
+  const user = await this.userModel.findByIdAndUpdate(finduser._id, { $set: { role: 'Admin' } }).exec();
+  return user;
+
+}
 
 }

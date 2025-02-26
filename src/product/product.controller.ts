@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Req, Patch, Param, Get, Delete, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req, Patch, Param, Get, Delete, Query, BadRequestException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto } from '../Dto/product.dto';
 import { AuthenticationGuard } from '../auth/authentication.guard';

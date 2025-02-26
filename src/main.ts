@@ -10,7 +10,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  //app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
   app.getHttpAdapter().getInstance().addHook('onSend', (request, reply, payload, done) => {
     reply.header('X-Powered-By', 'Fastify');
     done(null, payload);
