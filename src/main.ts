@@ -24,7 +24,7 @@ async function bootstrap() {
 
   // Define CORS options
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:4200',
+    origin: '*',
     credentials: true,
   };
 

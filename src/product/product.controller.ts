@@ -47,7 +47,10 @@ export class ProductController {
     return products;
   }
 
-
+@Get("test")
+async test() {
+  return "Hello World";
+}
 
 
   @Get('/search')
