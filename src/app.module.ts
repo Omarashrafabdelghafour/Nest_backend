@@ -9,7 +9,7 @@ import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true ,}),
     MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     ProductModule,
