@@ -10,7 +10,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  //app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
   app.getHttpAdapter().getInstance().addHook('onSend', (request, reply, payload, done) => {
     reply.header('X-Powered-By', 'Fastify');
     done(null, payload);
@@ -24,7 +24,7 @@ async function bootstrap() {
 
   // Define CORS options
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:4200',
+    origin: '*',
     credentials: true,
   };
 
@@ -34,7 +34,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(5000);
+  await app.listen(process.env.PORT || 8080);
 }
 
 bootstrap();

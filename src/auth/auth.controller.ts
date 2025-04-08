@@ -10,11 +10,13 @@ import { RolesGuard } from './roles.guard';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Response } from 'express';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import path from 'path';
 
 // import { Role } from 'src/decorators/roles.decorator';
 // import { AuthorizationGuard } from './authorization.guard';
 @Controller('auth')
 @ApiTags("Auth")
+@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
@@ -39,7 +41,8 @@ console.log('redirect to url')
     }  
 @ApiBearerAuth()
     @Get('get_users')
-    @UseGuards(AuthenticationGuard)
+    @UseGuards(AuthenticationGuard, RolesGuard)
+    @Roles('Admin')
     FindAll() {
       return this.authService.findAll();
     }
@@ -91,6 +94,12 @@ console.log('redirect to url')
       // Option 1: Send a plain text message
       res.send('Page not found');
   
+    }
+    @Patch("give_role/:email")
+    @UseGuards(AuthenticationGuard, RolesGuard)
+    @Roles('Admin')
+    async giveRole(@Param('email') email: string, @Body() role: string) {
+      return this.authService.giveRole(email,role);
     }
     
 }
